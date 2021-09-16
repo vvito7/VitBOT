@@ -16,10 +16,17 @@ module.exports = {
 
         axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${string}&appid=${apiKey}`)
             .then((res) => {
+                function getEmote(weather) {
+                    if (weather == 'Clouds') return ':cloud:';
+                    if (weather == 'Clear') return ':sunny:';
+                    if (weather == 'Snow') return ':cloud_snow:';
+                    if (weather == 'Rain') return ':cloud_rain:';
+                }
+
                 const weatherEmbed = new MessageEmbed()
                     .setColor('f1c40f')
                     .setTitle(`Weather in ${res.data.name} :flag_${res.data.sys.country.toLowerCase()}:`)
-                    .setDescription(`The temperature is ${parseFloat((res.data.main.temp - 273).toFixed(0))}°C at the moment.`)
+                    .setDescription(`The temperature is ${parseFloat((res.data.main.temp - 273).toFixed(0))}°C at the moment.\nCurrently the weather is ${res.data.weather[0].description} ${getEmote(res.data.weather[0].main)}`)
                     .setTimestamp()
                     .setFooter(`Executed by ${interaction.user.username}`, `${interaction.user.displayAvatarURL()}`)
 
