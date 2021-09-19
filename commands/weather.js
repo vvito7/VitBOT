@@ -28,9 +28,7 @@ module.exports = {
                     .setColor('349cdc')
                     .setTitle(`Weather in ${res.data.name} :flag_${res.data.sys.country.toLowerCase()}:`)
                     .setDescription(`The temperature is ${parseFloat((res.data.main.temp - 273).toFixed(0))}°C at the moment.\nCurrently the weather is ${res.data.weather[0].description} ${getEmote(res.data.weather[0].main)}`)
-                    .setTimestamp()
-                    .setFooter(`Executed by ${interaction.user.username}`, `${interaction.user.displayAvatarURL()}`)
-
+                    
                 interaction.reply({ embeds: [weatherEmbed] });
             })
             .catch((err) => {
