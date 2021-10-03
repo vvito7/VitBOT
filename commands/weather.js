@@ -33,6 +33,7 @@ module.exports = {
             })
             .catch((err) => {
                 console.error(err);
+                interaction.reply({ content: '<:redTick:312314733816709120> There was an error while executing this command!', ephemeral: true });
             })
     }
 }
