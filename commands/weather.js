@@ -10,7 +10,7 @@ module.exports = {
         .setDescription('Replies with the weather info of the selected city')
         .addStringOption(option => option.setName('city').setDescription('The city').setRequired(true)),
     async execute(interaction) {
-        const apiKey = process.env.apiKey;
+        const apiKey = process.env.weatherApiKey;
         let string = interaction.options.getString('city');
         string = string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
@@ -23,17 +23,17 @@ module.exports = {
                     if (weather == 'Rain') return ':cloud_rain:';
                     if (weather == 'Mist') return ':white_sun_cloud:';
                 }
-
+                
                 const weatherEmbed = new MessageEmbed()
-                    .setColor('349cdc')
-                    .setTitle(`Weather in ${res.data.name} :flag_${res.data.sys.country.toLowerCase()}:`)
-                    .setDescription(`The temperature is ${parseFloat((res.data.main.temp - 273).toFixed(0))}°C at the moment.\nCurrently the weather is ${res.data.weather[0].description} ${getEmote(res.data.weather[0].main)}`)
-                    
+                .setColor('349cdc')
+                .setTitle(`Weather in ${res.data.name} :flag_${res.data.sys.country.toLowerCase()}:`)
+                .setDescription(`The temperature is ${parseFloat((res.data.main.temp - 273).toFixed(0))}°C at the moment.\nCurrently the weather is ${res.data.weather[0].description} ${getEmote(res.data.weather[0].main)}`)
+                
                 interaction.reply({ embeds: [weatherEmbed] });
             })
             .catch((err) => {
                 console.error(err);
-                interaction.reply({ content: '<:redTick:312314733816709120> There was an error while executing this command!', ephemeral: true });
+                interaction.reply({ content: 'City not found <:redTick:312314733816709120>', ephemeral: true });
             })
     }
 }
